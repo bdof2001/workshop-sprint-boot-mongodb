@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import pt.nandes.workshopmongo.domain.Post;
 import pt.nandes.workshopmongo.domain.User;
 import pt.nandes.workshopmongo.dto.UserDTO;
 import pt.nandes.workshopmongo.services.UserService;
@@ -51,5 +52,11 @@ public class UserResource {
         obj.setId(id);
         service.update(obj);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping(value = "/{id}/posts")
+    public ResponseEntity<List<Post>> findPosts(@PathVariable String id) {
+        User obj = service.findById(id);
+        return ResponseEntity.ok(obj.getPosts());
     }
 }
